@@ -8,6 +8,9 @@ const port = process.env.PORT || 3000
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials')
+hbs.registerHelper('currentYear', () => {
+    return new Date().getFullYear();
+})
 app.set('view engine', 'hbs');
 
 app.use((req, res, next) => {
@@ -26,21 +29,19 @@ app.use((req, res, next) => {
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/home', (request, response) => {
+app.get('/', (request, response) => {
     response.render('home.hbs', {
         firstName: 'Smith',
         lastName: 'Taylor',
         fullName: 'Smith Taylor',
         id: 12345,
-        year: new Date().getFullYear(),
-        pageTitle: 'Home Page',
+        pageTitle: 'Home Page'
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about.hbs', {
-        pageTitle: 'About Page',
-        year: new Date().getFullYear()
+        pageTitle: 'About Page'
     });
 });
 
@@ -53,8 +54,7 @@ app.get('/bad', (req, res) => {
 
 app.get('/projects', (req, res) => {
     res.render('projects.hbs', {
-        pageTitle: 'Projects page',
-        year: new Date().getFullYear(),
+        pageTitle: 'Projects page'
     })
 })
 
